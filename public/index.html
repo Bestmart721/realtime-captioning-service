@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realtime Captioning Client</title>
+</head>
+<body>
+  <h1>Realtime Captioning Demo</h1>
+  <div>
+    <label>Client Token: <input id="token" value="client123" /></label>
+    <button onclick="startSession()">Start</button>
+  </div>
+  <div id="captions"></div>
+
+  <script>
+    let socket;
+    function startSession() {
+      const token = document.getElementById('token').value;
+      socket = new WebSocket(`ws://localhost:4000?token=${token}`);
+
+      socket.onopen = () => {
+        console.log('WebSocket connected');
+        // Simulate sending audio packets every 100ms
+        setInterval(() => {
+          if (socket.readyState === WebSocket.OPEN) {
+            socket.send('audio-packet');
+          }
+        }, 100);
+      };
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const div = document.getElementById('captions');
+        const p = document.createElement('p');
+        p.textContent = data.caption || data.error;
+        div.appendChild(p);
+      };
+    }
+  </script>
+</body>
+</html>

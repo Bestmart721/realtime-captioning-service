@@ -1,0 +1,17 @@
+{
+  "name": "realtime-captioning-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Sliger",
+  "license": "ISC",
+  "description": "A backend service that simulates real-time captioning via WebSockets and tracks usage.",
+  "dependencies": {
+    "express": "^4.21.2",
+    "uuid": "^11.1.0",
+    "ws": "^8.18.1"
+  }
+}
